@@ -1,0 +1,18 @@
+CARA MENGISI DAN MEMBUAT ULANG LAPORAN PDF
+==========================================
+1. Isi data pada config.json (kelas, nama kampus, link GitHub, hash commit, dst).
+   Kolom yang dibiarkan kosong tampil sebagai kotak kuning [ISI: ...].
+2. Simpan gambar (PNG) ke folder gambar/ dengan nama persis:
+     uml_class_diagram.png      -> class diagram (Gambar 2.1)
+     skenario_01.png ... skenario_16.png  -> tangkapan layar tiap skenario (Gambar 5.1 - 5.16)
+     logo.png                   -> logo kampus di sampul (opsional)
+     tanda_tangan.png           -> tanda tangan di Lampiran C (opsional)
+3. Pasang library (sekali saja):   pip install reportlab pillow
+4. Jalankan dari folder laporan:   python buat_laporan.py
+   Hasil: Laporan_UTS-POO_22515065_TirtaApriliansyah.pdf
+5. Ulangi langkah 4 setiap ada perubahan. Potongan kode di Bab 3 dan 4 dibaca otomatis dari ../src/hotel.
+
+Kode PlantUML untuk class diagram ada di class_diagram.puml (tempel ke https://www.plantuml.com/plantuml
+atau gambar ulang di draw.io).
+Catatan: bagian bertanda kuning (kendala/refleksi, daftar pustaka, catatan 3.7) perlu Anda sesuaikan
+dengan mengedit teks di buat_laporan.py.
