@@ -1,0 +1,109 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Kamar {
+  - nomorKamar : String
+  - tipe : String
+  - tarifPerMalam : double
+  - kapasitas : int
+  - terisi : boolean
+  + Kamar()
+  + Kamar(nomorKamar : String, tipe : String, tarifPerMalam : double, kapasitas : int)
+  + isTersedia() : boolean
+  + pesan() : void
+  + kosongkan() : void
+  + hitungBiaya(jumlahMalam : int) : double
+  + getStatusTeks() : String
+  + tampilkanInfo() : void
+  + getter / setter
+}
+
+class Tamu {
+  - kodeTamu : String
+  - nama : String
+  - noTelepon : String
+  - umur : int
+  - totalMalamMenginap : int
+  + Tamu()
+  + Tamu(kodeTamu : String, nama : String, noTelepon : String, umur : int)
+  + tambahMalamMenginap(malam : int) : void
+  + isTamuSetia() : boolean
+  + getKategori() : String
+  + tampilkanInfo() : void
+  + getter / setter
+}
+
+class Reservasi {
+  - kodeReservasi : String
+  - tamu : Tamu
+  - kamar : Kamar
+  - jumlahMalam : int
+  - tanggalCheckIn : LocalDate
+  - status : String
+  + Reservasi()
+  + Reservasi(kodeReservasi : String, tamu : Tamu, kamar : Kamar, jumlahMalam : int, tanggalCheckIn : LocalDate)
+  + hitungBiaya() : double
+  + getTanggalCheckOut() : LocalDate
+  + isAktif() : boolean
+  + batalkan() : void
+  + checkOut() : void
+  + tampilkanInfo() : void
+  + cetakStruk() : void
+  + getter / setter
+}
+
+class Hotel {
+  - namaHotel : String
+  - alamat : String
+  - bintang : int
+  - daftarKamar : ArrayList<Kamar>
+  - daftarTamu : ArrayList<Tamu>
+  - daftarReservasi : ArrayList<Reservasi>
+  - riwayat : StackRiwayat
+  - urutanReservasi : int
+  + Hotel()
+  + Hotel(namaHotel : String, alamat : String, bintang : int, kapasitasRiwayat : int)
+  + tambahKamar(kamar : Kamar) : void
+  + tambahTamu(tamu : Tamu) : void
+  + cariKamar(nomor : String) : Kamar
+  + cariTamu(kunci : String) : List<Tamu>
+  + cariReservasi(kode : String) : Reservasi
+  + buatReservasi(kodeTamu : String, nomorKamar : String, jumlahMalam : int, tgl : LocalDate) : Reservasi
+  + batalkanReservasiTerakhir() : Reservasi
+  + checkOut(kode : String) : Reservasi
+  + hitungTotalPendapatan() : double
+  + hitungTingkatHunian() : double
+}
+
+class StackRiwayat <<ADT>> {
+  - data : Reservasi[]
+  - top : int
+  - kapasitas : int
+  + StackRiwayat()
+  + StackRiwayat(kapasitas : int)
+  + push(r : Reservasi) : boolean
+  + pop() : Reservasi
+  + peek() : Reservasi
+  + isEmpty() : boolean
+  + isFull() : boolean
+  + size() : int
+  + clear() : void
+  + tampilkan() : void
+}
+
+class Main {
+  - hotel : Hotel
+  + main(args : String[]) : void
+}
+
+Hotel "1" *-- "0..*" Kamar : memiliki >
+Hotel "1" *-- "0..*" Reservasi : mencatat >
+Hotel "1" o-- "0..*" Tamu : mendaftarkan >
+Hotel "1" *-- "1" StackRiwayat : menyimpan riwayat >
+Reservasi "0..*" --> "1" Tamu : dipesan oleh >
+Reservasi "0..*" --> "1" Kamar : menempati >
+StackRiwayat "1" o-- "0..*" Reservasi : menumpuk >
+Main ..> Hotel : memakai
+Main ..> Kamar : membuat
+Main ..> Tamu : membuat
+@enduml
